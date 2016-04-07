@@ -1,11 +1,11 @@
-3d234a68f92f2df345929deae25cf3d5 *DESCRIPTION
+bb4e0e3a9eaccb8d2d825601a2127397 *DESCRIPTION
 d05055f0f2dd6b74adfb781d83c3e896 *NAMESPACE
-0a529234d3cbb37ee9233ce47e051be5 *R/CRTgeeDR-main.R
-7d53af3bef700e0cd584085cfd2aa24c *R/getFay.R
+e26aec0be6186b5b1dbc12737f0df2ef *R/CRTgeeDR-main.R
+ef47692831dd3cb02e9d1644ae73b125 *R/getFay.R
 a79b9bff2ecf4318a51e573e081534e0 *R/getSandwich.R
-c5a5a90e5d09670c54b4a99ecb26498c *R/getSandwichNuisance.R
+f9c6ddc72480a3f30dae07e1271ddcb5 *R/getSandwichNuisance.R
 d5c84e033805df50a2773dc52ee35741 *R/numDeriv.R
-a185326ce5e890add424d2c5e5934ec7 *R/print.R
+a817495f490e813c98460064beede08d *R/print.R
 476c1c9b96fcac06890194e3bcfa940f *R/updatealpha.R
 c28b2ea2e08e5a0b2bd49fb8ef9950b1 *R/updatebeta.R
 fbc3fed51e045c65c99eba9e7ee7f946 *R/updatematrices.R
@@ -16,8 +16,8 @@ c687433545236ec5f93c245a548f66c8 *R/userstruct.R
 3593fd589a664d9866197f02b813d81c *man/CRTgeeDR.Rd
 97c118645349ee9d0ed9bf23f99fc4a3 *man/data.sim.Rd
 d6904f5aa94c93d802c4bdafdd57c566 *man/fitted.CRTgeeDR.Rd
-0aca01550b19e6ec0c5210090e244259 *man/geeDREstimation.Rd
-b66b18b62c4f22ecd0656c5148787a91 *man/getCI.Rd
+825a5bb9fcc0e70ba9041e9fbf0ae472 *man/geeDREstimation.Rd
+51222ef916fe9f94c51e9c26aca81acb *man/getCI.Rd
 28bb58dda6c3daaaa47a67193c618c8f *man/getOMPlot.Rd
 e14140fb7a9c370799c1338809a9a815 *man/getPSPlot.Rd
 27e9e073d67da0830f9bb254bfde7030 *man/predict.CRTgeeDR.Rd

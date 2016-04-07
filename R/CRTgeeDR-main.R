@@ -21,7 +21,7 @@
 #' @param tol tolerance in calculation of coefficients.
 #' @param print.log if set to TRUE, a report is printed.
 #' @param typeweights a character string specifying the weights implementation. The following are permitted: "GENMOD" for $W^{1/2}V^{-1}W^{1/2}$, "WV" for $V^{-1}W$
-#' @param nametrt Name of the variable containing information for the treatment 
+#' @param nameTRT Name of the variable containing information for the treatment 
 #' @param model.weights an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted for the propensity score. Must model the probability of being observed. 
 #' @param model.augmentation.trt an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted for the ouctome model for the treated group (A=1). 
 #' @param model.augmentation.ctrl an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted for the ouctome model for the control group (A=0). 
@@ -138,7 +138,7 @@
 #'                                model.augmentation.ctrl=OUTCOME~AGE, stepwise.augmentation=FALSE)
 #'  summary(drresults)                            
 
-geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian, corstr = "independence", Mv = 1, weights = NULL, aug=NULL,pi.a=1/2, corr.mat = NULL, init.beta=NULL, init.alpha=NULL, init.phi = 1, scale.fix=FALSE, sandwich=TRUE, maxit=20, tol=0.00001,print.log=FALSE,typeweights="VW",nametrt="TRT",model.weights=NULL,model.augmentation.trt=NULL,model.augmentation.ctrl=NULL,stepwise.augmentation=FALSE,stepwise.weights=FALSE,nameMISS="MISSING",nameY="OUTCOME",sandwich.nuisance=FALSE,fay.adjustment=FALSE,fay.bound=0.75){
+geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian, corstr = "independence", Mv = 1, weights = NULL, aug=NULL,pi.a=1/2, corr.mat = NULL, init.beta=NULL, init.alpha=NULL, init.phi = 1, scale.fix=FALSE, sandwich=TRUE, maxit=20, tol=0.00001,print.log=FALSE,typeweights="VW",nameTRT="TRT",model.weights=NULL,model.augmentation.trt=NULL,model.augmentation.ctrl=NULL,stepwise.augmentation=FALSE,stepwise.weights=FALSE,nameMISS="MISSING",nameY="OUTCOME",sandwich.nuisance=FALSE,fay.adjustment=FALSE,fay.bound=0.75){
   if(print.log)print("********************************************************************************************")
   if(print.log){print("DESCRIPTION: Doubly Robust Inverse Probability Weighted Augmented GEE estimator")}
   if(print.log)print("********************************************************************************************")
@@ -157,7 +157,7 @@ geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian
     stop("If scale.fix=TRUE, then init.phi must be supplied")
   }
   
-  if((!(sum(!(unique(data[,nametrt])%in%c(0,1)))==0))&(!(is.null(aug)&is.null(model.augmentation.trt)&is.null(model.augmentation.ctrl)))){
+  if((!(sum(!(unique(data[,nameTRT])%in%c(0,1)))==0))&(!(is.null(aug)&is.null(model.augmentation.trt)&is.null(model.augmentation.ctrl)))){
     stop("Augmentation is requested whereas more than two level of treatment exist. Implementation not available yet.")
   }
   
@@ -279,11 +279,11 @@ geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian
   modterms <- terms(formula)
 	X <- model.matrix(formula,dat)
   X.t <- X.c <- X
-  if(nametrt %in% colnames(dat)){
-  X.t[,nametrt]<-1.0000
-  X.c[,nametrt]<-0.0000
+  if(nameTRT %in% colnames(dat)){
+  X.t[,nameTRT]<-1.0000
+  X.c[,nameTRT]<-0.0000
   }else{
-    stop("User need to provide the name of the treatment variable in nametrt. Default nametrt='TRT' does not exist in the dataset.")   
+    stop("User need to provide the name of the treatment variable in nameTRT. Default nameTRT='TRT' does not exist in the dataset.")   
   }
   Y <- as.matrix(model.response(dat))
   
@@ -299,12 +299,12 @@ geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian
     if(print.log){print("OM are computed internally...")}
     warning("Warning: Outcome model for augmentation is computed internally. Information given in attribute 'aug' will be ingnored.")
   
-  data.trt<-dat.om.trt[which((dat.om.trt[,nametrt]==1)),]
-  data.ctrl<-dat.om.ctrl[which((dat.om.ctrl[,nametrt]==0)),]
+  data.trt<-dat.om.trt[which((dat.om.trt[,nameTRT]==1)),]
+  data.ctrl<-dat.om.ctrl[which((dat.om.ctrl[,nameTRT]==0)),]
   data.t<-dat.om.trt
-  data.t[,nametrt]<-1
+  data.t[,nameTRT]<-1
   data.c<-dat.om.ctrl
-  data.c[,nametrt]<-0 
+  data.c[,nameTRT]<-0 
  
   if(stepwise.augmentation){
     om.t<-step(glm(model.augmentation.trt,data=data.trt,family=family),trace=0)
@@ -330,13 +330,13 @@ geeDREstimation <- function(formula, id,data = parent.frame(), family = gaussian
     }  
    
     ###  Alert the user if there are covariates in the main regression and augmentation is used -- Stop had been removed because theoritical result is still valid.
-    if(formula!=as.formula(paste(paste(as.character(formula)[2],as.character(formula)[1],sep=""),nametrt,sep=""))){
+    if(formula!=as.formula(paste(paste(as.character(formula)[2],as.character(formula)[1],sep=""),nameTRT,sep=""))){
       warning("Warning: Augmentation approach is used with a marginal model including covariates.")
     }
     B.c<-data[,aug["ctrl"]]
     B.t<-data[,aug["trt"]]
     temp<-cbind(X,B.c,B.t)
-    Bi<-ifelse(temp[,nametrt]==1,temp[,"B.t"],temp[,"B.c"])
+    Bi<-ifelse(temp[,nameTRT]==1,temp[,"B.t"],temp[,"B.c"])
     B<-cbind(B.c,B.t,Bi)
   }
   
@@ -526,7 +526,7 @@ if(print.log){print(paste("Number of Observations included:",sum(includedvec),se
 if(print.log){print(paste("Variable for PS:",weightsname,sep=" "))}
 if(print.log){print(paste("Variable for OUTCOME:",nameY,sep=" "))}
 if(print.log){print(paste("Variable for MISSING:",nameMISS,sep=" "))}
-if(print.log){print(paste("Variable for TRT:",nametrt,sep=" "))}
+if(print.log){print(paste("Variable for TRT:",nameTRT,sep=" "))}
 
 # Main fisher scoring loop
 if(print.log){print("------------------------------------------------------------> Estimations")}
@@ -651,7 +651,7 @@ if(is.null(B)){
                                             InvLinkDeriv=InvLinkDeriv, InvLink=InvLink, VarFun=VarFun,
                                             hessMat=beta.list$hess, StdErr=StdErr, dInvLinkdEta=dInvLinkdEta, 
                                             BlockDiag=BlockDiag, sqrtW=sqrtW,W=W,included=included,typeweights=typeweights,pi.a=pi.a,
-                                            nametrt=nametrt,propensity.score=propensity.score,om.t=om.t,om.c=om.c,
+                                            nameTRT=nameTRT,propensity.score=propensity.score,om.t=om.t,om.c=om.c,
                                             data=dat.nuis,nameY=nameY,nameMISS=nameMISS,print.log=print.log)
      }, error=function(e){
        cat("There was an error in the nuisance variance computation \n")
@@ -672,7 +672,7 @@ if(is.null(B)){
 	                              InvLinkDeriv=InvLinkDeriv, InvLink=InvLink, VarFun=VarFun,
 	                              StdErr=StdErr, dInvLinkdEta=dInvLinkdEta, 
 	                              BlockDiag=BlockDiag, sqrtW=sqrtW,W=W,included=included,typeweights=typeweights,pi.a=pi.a,
-	                              nametrt=nametrt,propensity.score=propensity.score,om.t=om.t,om.c=om.c,
+	                              nameTRT=nameTRT,propensity.score=propensity.score,om.t=om.t,om.c=om.c,
 	                              nameY=nameY,nameMISS=nameMISS,print.log=print.log)
 	   },
 	  error=function(e){

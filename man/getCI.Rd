@@ -4,12 +4,12 @@
 \alias{getCI}
 \title{Get Mean, Sd and CI for estimates from CRTgeeDR object.}
 \usage{
-getCI(object, nametrt = "TRT", quantile = 1.96)
+getCI(object, nameTRT = "TRT", quantile = 1.96)
 }
 \arguments{
 \item{object}{CRTgeeDR}
 
-\item{nametrt,}{character including the name of the variable of interest (often the treatment)}
+\item{nameTRT,}{character including the name of the variable of interest (often the treatment)}
 
 \item{quantile,}{value of the normal quantile for the IC. default is 1.96 for 95\%CI.}
 }

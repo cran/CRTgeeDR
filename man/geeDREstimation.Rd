@@ -8,7 +8,7 @@ geeDREstimation(formula, id, data = parent.frame(), family = gaussian,
   corstr = "independence", Mv = 1, weights = NULL, aug = NULL,
   pi.a = 1/2, corr.mat = NULL, init.beta = NULL, init.alpha = NULL,
   init.phi = 1, scale.fix = FALSE, sandwich = TRUE, maxit = 20,
-  tol = 1e-05, print.log = FALSE, typeweights = "VW", nametrt = "TRT",
+  tol = 1e-05, print.log = FALSE, typeweights = "VW", nameTRT = "TRT",
   model.weights = NULL, model.augmentation.trt = NULL,
   model.augmentation.ctrl = NULL, stepwise.augmentation = FALSE,
   stepwise.weights = FALSE, nameMISS = "MISSING", nameY = "OUTCOME",
@@ -53,7 +53,7 @@ geeDREstimation(formula, id, data = parent.frame(), family = gaussian,
 
 \item{typeweights}{a character string specifying the weights implementation. The following are permitted: "GENMOD" for $W^{1/2}V^{-1}W^{1/2}$, "WV" for $V^{-1}W$}
 
-\item{nametrt}{Name of the variable containing information for the treatment}
+\item{nameTRT}{Name of the variable containing information for the treatment}
 
 \item{model.weights}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted for the propensity score. Must model the probability of being observed.}
 

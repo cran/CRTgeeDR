@@ -1,5 +1,5 @@
 ### Calculate the sandwich estimator accounting for estimation of nuisance parameters in PS and OM.
-getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, InvLinkDeriv, InvLink, VarFun, hessMat, StdErr, dInvLinkdEta, BlockDiag, sqrtW,W,included,typeweights,pi.a,nametrt,propensity.score,om.t,om.c,data,nameY,nameMISS,print.log){
+getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, InvLinkDeriv, InvLink, VarFun, hessMat, StdErr, dInvLinkdEta, BlockDiag, sqrtW,W,included,typeweights,pi.a,nameTRT,propensity.score,om.t,om.c,data,nameY,nameMISS,print.log){
   
   eta <- as.vector(X%*%beta) + off
   diag(dInvLinkdEta) <- InvLinkDeriv(eta)
@@ -71,7 +71,7 @@ getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, 
     jacobian.nuisance<-jacobian(funcoptvarnuisanceOMPS, nuisance,method="Richardson",sqrtW=sqrtW,
                                 design.weights=design.weights,design.om.trt.all=design.om.trt.all,design.om.ctrl.all=design.om.ctrl.all,
                                 ,design.om.trt=design.om.trt,design.om.ctrl=design.om.ctrl,
-                                nametrt=nametrt,nameY=nameY,nameMISS=nameMISS,
+                                nameTRT=nameTRT,nameY=nameY,nameMISS=nameMISS,
                                 data=data,X=X,X.c=X.c,X.t=X.t,InvLinkDeriv=InvLinkDeriv, InvLink=InvLink,
                                 VarFun=VarFun,dInvLinkdEta=dInvLinkdEta,StdErr=StdErr,R.alpha.inv=R.alpha.inv,Y=Y,off=off,pi.a=pi.a,B=B,typeweights=typeweights)    
     
@@ -102,7 +102,7 @@ getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, 
     jacobian.nuisance<-jacobian(funcoptvarnuisanceOM, nuisance,method="Richardson",sqrtW=sqrtW,
                                 design.weights=design.weights,design.om.trt.all=design.om.trt.all,design.om.ctrl.all=design.om.ctrl.all,
                                 ,design.om.trt=design.om.trt,design.om.ctrl=design.om.ctrl,
-                                nametrt=nametrt,nameY=nameY,nameMISS=nameMISS,
+                                nameTRT=nameTRT,nameY=nameY,nameMISS=nameMISS,
                                 data=data,X=X,X.c=X.c,X.t=X.t,InvLinkDeriv=InvLinkDeriv, InvLink=InvLink,
                                 VarFun=VarFun,dInvLinkdEta=dInvLinkdEta,StdErr=StdErr,R.alpha.inv=R.alpha.inv,Y=Y,off=off,pi.a=pi.a,B=B,typeweights=typeweights)    
     if(!is.null(typeweights)){
@@ -139,7 +139,7 @@ getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, 
     jacobian.nuisance<-jacobian(funcoptvarnuisancePS, nuisance,method="Richardson",sqrtW=sqrtW,
                                 design.weights=design.weights,design.om.trt.all=design.om.trt.all,design.om.ctrl.all=design.om.ctrl.all,
                                 design.om.trt=design.om.trt,design.om.ctrl=design.om.ctrl,
-                                nametrt=nametrt,nameY=nameY,nameMISS=nameMISS,
+                                nameTRT=nameTRT,nameY=nameY,nameMISS=nameMISS,
                                 data=data,X=X,X.c=X.c,X.t=X.t,InvLinkDeriv=InvLinkDeriv, InvLink=InvLink,
                                 VarFun=VarFun,dInvLinkdEta=dInvLinkdEta,StdErr=StdErr,R.alpha.inv=R.alpha.inv,Y=Y,off=off,pi.a=pi.a,B=B,typeweights=typeweights)    
     
@@ -185,7 +185,7 @@ getSandwichNuisance = function(Y, X,X.t,X.c, B, beta,off, id, R.alpha.inv, phi, 
 ### Function computing the join score equation (EE,PS,OM) depending on main and nuisance parameters values
 funcoptvarnuisanceOMPS <- function(nuisance,sqrtW,
                                    design.weights,design.om.trt.all,design.om.ctrl.all,design.om.trt,design.om.ctrl,
-                                   nametrt,nameY,nameMISS,
+                                   nameTRT,nameY,nameMISS,
                                    data,X,X.c,X.t,InvLinkDeriv, InvLink, VarFun,dInvLinkdEta,StdErr,R.alpha.inv,Y,off,pi.a,B,typeweights){
   
   etaEE<-nuisance[1:ncol(X)]+1
@@ -224,16 +224,16 @@ funcoptvarnuisanceOMPS <- function(nuisance,sqrtW,
   B.temp<-as.data.frame(InvLink(as.matrix(design.om.trt.all)%*%etaBtrt))
   names(B.temp)<-c("B.t")
   B.temp[,"B.c"]<-as.data.frame(InvLink(as.matrix(design.om.ctrl.all)%*%etaBctrl))
-  temp<-as.data.frame(cbind(as.data.frame(X)[,colnames(as.data.frame(X))==nametrt],B.temp[,"B.c"],B.temp[,"B.t"])) 
-  names(temp)<-c(nametrt,"B.c","B.t")
-  Bi.temp<-ifelse(temp[,nametrt]==1,temp[,"B.t"],temp[,"B.c"])
+  temp<-as.data.frame(cbind(as.data.frame(X)[,colnames(as.data.frame(X))==nameTRT],B.temp[,"B.c"],B.temp[,"B.t"])) 
+  names(temp)<-c(nameTRT,"B.c","B.t")
+  Bi.temp<-ifelse(temp[,nameTRT]==1,temp[,"B.t"],temp[,"B.c"])
   B.temp<-as.data.frame(cbind(temp[,"B.c"],temp[,"B.t"],Bi.temp))
   names(B.temp)<-c("B.c","B.t","Bi")
   
   predtrt<-as.data.frame(InvLink(as.matrix(design.om.trt)%*%etaBtrt))
   predctrl<-as.data.frame(InvLink(as.matrix(design.om.ctrl)%*%etaBctrl))  
-  SB.trt<-as.vector(t(design.om.trt)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nametrt]==1)),nameY]-predtrt)))
-  SB.ctrl<-as.vector(t(design.om.ctrl)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nametrt]==0)),nameY]-predctrl)))
+  SB.trt<-as.vector(t(design.om.trt)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nameTRT]==1)),nameY]-predtrt)))
+  SB.ctrl<-as.vector(t(design.om.ctrl)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nameTRT]==0)),nameY]-predctrl)))
   
   if(typeweights=="GENMOD"){
     scoreEE<-as.vector(crossprod(sqrtW.temp %*% StdErr %*%dInvLinkdEta %*%X , R.alpha.inv %*% sqrtW.temp %*% StdErr %*% (Y - B.temp[,"Bi"])) +
@@ -251,7 +251,7 @@ funcoptvarnuisanceOMPS <- function(nuisance,sqrtW,
 ### Function computing the join score equation (EE,OM) depending on main and nuisance parameters values
 funcoptvarnuisanceOM <- function(nuisance,sqrtW,
                                  design.weights,design.om.trt.all,design.om.ctrl.all,design.om.trt,design.om.ctrl,
-                                 nametrt,nameY,nameMISS,
+                                 nameTRT,nameY,nameMISS,
                                  data,X,X.c,X.t,InvLinkDeriv, InvLink, VarFun,dInvLinkdEta,StdErr,R.alpha.inv,Y,off,pi.a,B,typeweights){
   
   etaEE<-nuisance[1:ncol(X)]+1
@@ -284,16 +284,16 @@ funcoptvarnuisanceOM <- function(nuisance,sqrtW,
   B.temp<-as.data.frame(InvLink(as.matrix(design.om.trt.all)%*%etaBtrt))
   names(B.temp)<-c("B.t")
   B.temp[,"B.c"]<-as.data.frame(InvLink(as.matrix(design.om.ctrl.all)%*%etaBctrl))
-  temp<-as.data.frame(cbind(as.data.frame(X)[,colnames(as.data.frame(X))==nametrt],B.temp[,"B.c"],B.temp[,"B.t"])) 
-  names(temp)<-c(nametrt,"B.c","B.t")
-  Bi.temp<-ifelse(temp[,nametrt]==1,temp[,"B.t"],temp[,"B.c"])
+  temp<-as.data.frame(cbind(as.data.frame(X)[,colnames(as.data.frame(X))==nameTRT],B.temp[,"B.c"],B.temp[,"B.t"])) 
+  names(temp)<-c(nameTRT,"B.c","B.t")
+  Bi.temp<-ifelse(temp[,nameTRT]==1,temp[,"B.t"],temp[,"B.c"])
   B.temp<-as.data.frame(cbind(temp[,"B.c"],temp[,"B.t"],Bi.temp))
   names(B.temp)<-c("B.c","B.t","Bi")
   
   predtrt<-as.data.frame(InvLink(as.matrix(design.om.trt)%*%etaBtrt))
   predctrl<-as.data.frame(InvLink(as.matrix(design.om.ctrl)%*%etaBctrl))  
-  SB.trt<-as.vector(t(design.om.trt)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nametrt]==1)),nameY]-predtrt)))
-  SB.ctrl<-as.vector(t(design.om.ctrl)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nametrt]==0)),nameY]-predctrl)))
+  SB.trt<-as.vector(t(design.om.trt)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nameTRT]==1)),nameY]-predtrt)))
+  SB.ctrl<-as.vector(t(design.om.ctrl)%*%as.matrix((data[which((!is.na(data[,nameY]))&(data[,nameTRT]==0)),nameY]-predctrl)))
   
   if(!is.null(typeweights)){
     if(typeweights=="GENMOD"){
@@ -316,7 +316,7 @@ funcoptvarnuisanceOM <- function(nuisance,sqrtW,
 ### Function computing the join score equation (EE,PS) depending on main and nuisance parameters values
 funcoptvarnuisancePS <- function(nuisance,sqrtW,
                                  design.weights,design.om.trt.all,design.om.ctrl.all,design.om.trt,design.om.ctrl,
-                                 nametrt,nameY,nameMISS,
+                                 nameTRT,nameY,nameMISS,
                                  data,X,X.c,X.t,InvLinkDeriv, InvLink, VarFun,dInvLinkdEta,StdErr,R.alpha.inv,Y,off,pi.a,B,typeweights){
   
   etaEE<-nuisance[1:ncol(X)]+1

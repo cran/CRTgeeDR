@@ -89,34 +89,34 @@ print.CRTgeeDR <- function(x, ...){
 #' Get the estimates, standard deviations and confidence intervals from an CRTgeeDR object associated with a regressor given in argument.
 #' 
 #' @param object CRTgeeDR
-#' @param nametrt, character including the name of the variable of interest (often the treatment)
+#' @param nameTRT, character including the name of the variable of interest (often the treatment)
 #' @param quantile, value of the normal quantile for the IC. default is 1.96 for 95\%CI. 
 #' @export 
 #' 
-getCI <-function(object,nametrt="TRT",quantile=1.96){
+getCI <-function(object,nameTRT="TRT",quantile=1.96){
   stats.summary <- c()
-  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nametrt)])
+  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nameTRT)])
  
-  stats.summary<-c(stats.summary,sqrt(object$var.naiv[which(object$coefnames==nametrt),which(object$coefnames==nametrt)]))
-  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nametrt)]-quantile*sqrt(object$var.naiv[which(object$coefnames==nametrt),which(object$coefnames==nametrt)]))
-  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nametrt)]+quantile*sqrt(object$var.naiv[which(object$coefnames==nametrt),which(object$coefnames==nametrt)]))
+  stats.summary<-c(stats.summary,sqrt(object$var.naiv[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)]))
+  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nameTRT)]-quantile*sqrt(object$var.naiv[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)]))
+  stats.summary<-c(stats.summary,object$beta[which(object$coefnames==nameTRT)]+quantile*sqrt(object$var.naiv[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)]))
   
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,sqrt(object$var[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,object$beta[which(object$coefnames==nametrt)]-quantile*sqrt(object$var[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,object$beta[which(object$coefnames==nametrt)]+quantile*sqrt(object$var[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,sqrt(object$var[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,object$beta[which(object$coefnames==nameTRT)]-quantile*sqrt(object$var[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var),NA,object$beta[which(object$coefnames==nameTRT)]+quantile*sqrt(object$var[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
   
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,sqrt(object$var.nuisance[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,object$beta[which(object$coefnames==nametrt)]-quantile*sqrt(object$var.nuisance[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,object$beta[which(object$coefnames==nametrt)]+quantile*sqrt(object$var.nuisance[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,sqrt(object$var.nuisance[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,object$beta[which(object$coefnames==nameTRT)]-quantile*sqrt(object$var.nuisance[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.nuisance),NA,object$beta[which(object$coefnames==nameTRT)]+quantile*sqrt(object$var.nuisance[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
 
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,sqrt(object$var.fay[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,object$beta[which(object$coefnames==nametrt)]-quantile*sqrt(object$var.fay[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
-  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,object$beta[which(object$coefnames==nametrt)]+quantile*sqrt(object$var.fay[which(object$coefnames==nametrt),which(object$coefnames==nametrt)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,sqrt(object$var.fay[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,object$beta[which(object$coefnames==nameTRT)]-quantile*sqrt(object$var.fay[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
+  stats.summary<-c(stats.summary,ifelse(is.null(object$var.fay),NA,object$beta[which(object$coefnames==nameTRT)]+quantile*sqrt(object$var.fay[which(object$coefnames==nameTRT),which(object$coefnames==nameTRT)])))
   
   stats.summary<-c(stats.summary,object$converged)
   stats.summary<-t(as.matrix(stats.summary))
   colnames(stats.summary)<-c("Estimate","Naive SD","CI naive min","CI naive max","Sandwich SD","CI Sandwich min","CI Sandwich max","Nuisance-adj SD","CI Nuisance-adj min","CI Nuisance-adj max","Fay-adj SD","CI Fay-adj min","CI Fay-adj max","Convergence Status")
-  rownames(stats.summary)<-c(nametrt)
+  rownames(stats.summary)<-c(nameTRT)
   return(stats.summary)
 }
 

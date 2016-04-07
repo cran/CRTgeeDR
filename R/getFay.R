@@ -8,7 +8,7 @@ getFay = function(formula,id,family,data,corstr,b,beta,alpha,scale,Y,X,hessMAT,
                   InvLinkDeriv, InvLink, VarFun,
                   StdErr, dInvLinkdEta,
                   BlockDiag, sqrtW,W,included,typeweights,pi.a,
-                  nametrt,propensity.score,om.t,om.c,
+                  nameTRT,propensity.score,om.t,om.c,
                   nameY,nameMISS,print.log){
 
   
