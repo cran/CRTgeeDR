@@ -79,7 +79,7 @@ updateBeta = function(Y, X,X.t,X.c, B, beta, off, InvLinkDeriv, InvLink, VarFun,
   
     update <- solve(hess, esteq)
     #print(update)
-    if(max(abs(update)/beta.new) < 100*tol){break}
+    if(max(abs(update/beta.new)) < 100*tol){break}
     beta.new <- beta.new + as.vector(update)
     #print(beta.new)
   }
