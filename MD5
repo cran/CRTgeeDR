@@ -1,4 +1,4 @@
-b51450a938edc07497de603ae1cc1890 *DESCRIPTION
+beff48c678c4652efa852e482003beee *DESCRIPTION
 d05055f0f2dd6b74adfb781d83c3e896 *NAMESPACE
 589f6702cbfacc3ca49daaf48bb0bf1c *R/CRTgeeDR-main.R
 ef47692831dd3cb02e9d1644ae73b125 *R/getFay.R
@@ -12,11 +12,11 @@ fbc3fed51e045c65c99eba9e7ee7f946 *R/updatematrices.R
 0cd3c1eca088a006579930356b69fa20 *R/updatephi.R
 c687433545236ec5f93c245a548f66c8 *R/userstruct.R
 8ce2305f6d49cee5d2b07adbf5cbfdc6 *R/utility.R
-6504e476340524602b9637a2fb02fdac *data/data.sim.txt
+dda9bc19f425c3af30733d83bd5b4d30 *data/data.sim.txt.xz
 3593fd589a664d9866197f02b813d81c *man/CRTgeeDR.Rd
 97c118645349ee9d0ed9bf23f99fc4a3 *man/data.sim.Rd
 d6904f5aa94c93d802c4bdafdd57c566 *man/fitted.CRTgeeDR.Rd
-825a5bb9fcc0e70ba9041e9fbf0ae472 *man/geeDREstimation.Rd
+99d0f8d8ad928c2380f88ce1743898ff *man/geeDREstimation.Rd
 51222ef916fe9f94c51e9c26aca81acb *man/getCI.Rd
 28bb58dda6c3daaaa47a67193c618c8f *man/getOMPlot.Rd
 e14140fb7a9c370799c1338809a9a815 *man/getPSPlot.Rd

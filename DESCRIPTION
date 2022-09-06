@@ -1,7 +1,7 @@
 Package: CRTgeeDR
 Title: Doubly Robust Inverse Probability Weighted Augmented GEE
         Estimator
-Version: 2.0
+Version: 2.0.1
 Authors@R: c(person("Melanie", "Prague", role = c("aut", "cre"),email =
         "mprague@hsph.harvard.edu"), person("Paul", "Gilbert", role =
         "ctb",comment = "Author of R package numDeriv, which has been
@@ -17,10 +17,11 @@ Authors@R: c(person("Melanie", "Prague", role = c("aut", "cre"),email =
 Maintainer: Melanie Prague <mprague@hsph.harvard.edu>
 Description: Implements a semi-parametric GEE estimator accounting for missing data with Inverse-probability weighting (IPW) and for imbalance in covariates with augmentation (AUG). The estimator IPW-AUG-GEE is Doubly robust (DR).
 License: GPL (>= 2)
-Depends: Matrix, MASS, ggplot2, grDevices, graphics, stats, methods
+Depends: R (>= 2.10), Matrix, MASS, ggplot2, grDevices, graphics,
+        stats, methods
 LazyData: true
 NeedsCompilation: no
-Packaged: 2017-07-09 07:05:53 UTC; melanieprague
+Packaged: 2022-09-06 07:02:13 UTC; hornik
 Author: Melanie Prague [aut, cre],
   Paul Gilbert [ctb] (Author of R package numDeriv, which has been
     acknowledged in numDeriv.R),
@@ -33,4 +34,4 @@ Author: Melanie Prague [aut, cre],
   Nick Henderson [ctb] (Author of R package geeM, which has been modfied
     and references in multiple R files)
 Repository: CRAN
-Date/Publication: 2017-07-09 07:47:26 UTC
+Date/Publication: 2022-09-06 07:28:24 UTC

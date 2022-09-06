@@ -51,7 +51,7 @@ geeDREstimation(formula, id, data = parent.frame(), family = gaussian,
 
 \item{print.log}{if set to TRUE, a report is printed.}
 
-\item{typeweights}{a character string specifying the weights implementation. The following are permitted: "GENMOD" for $W^{1/2}V^{-1}W^{1/2}$, "WV" for $V^{-1}W$}
+\item{typeweights}{a character string specifying the weights implementation. The following are permitted: "GENMOD" for \eqn{W^{1/2}V^{-1}W^{1/2}}, "WV" for \eqn{V^{-1}W}}
 
 \item{nameTRT}{Name of the variable containing information for the treatment}
 
@@ -109,7 +109,7 @@ This function implements a GEE estimator. It implements classical GEE, IPW-GEE, 
 The estimator is founds by solving:
  \deqn{ 0= \sum_{i=1}^M \Bigg[ \boldsymbol D_i^T \boldsymbol V_i^{-1} \boldsymbol  W_i(\boldsymbol X_i, A_i, \boldsymbol \eta_W) \left( \boldsymbol Y_i - \boldsymbol B(\boldsymbol X_i, A_i, \boldsymbol \eta_B) \right) }
  \deqn{ \qquad + \sum_{a=0,1} p^a(1-p)^{1-a} \boldsymbol D_i^T \boldsymbol V_i^{-1}  \Big( \boldsymbol B(\boldsymbol X_i,A_i=a, \boldsymbol \eta_B) -\boldsymbol \mu_i(\boldsymbol \beta,A_i=a)\Big) \Bigg]}
- where \eqn{\boldsymbol D_i=\frac{\partial \boldsymbol \mu_i(\boldsymbol \beta,A_i)}{\partial \boldsymbol \beta^T}} is the design matrix, \eqn{\boldsymbol V_i} is the covariance matrix equal to \eqn{\boldsymbol U_i^{1/2} \boldsymbol C(\boldsymbol \alpha)\boldsymbol U_i^{1/2}$ with $\boldsymbol U_i} a diagonal matrix with elements \eqn{{\rm var}(y_{ij})} and \eqn{\boldsymbol C(\boldsymbol \alpha)} is the working correlation structure with non-diagonal terms \eqn{\boldsymbol \alpha}.
+ where \eqn{\boldsymbol D_i=\frac{\partial \boldsymbol \mu_i(\boldsymbol \beta,A_i)}{\partial \boldsymbol \beta^T}} is the design matrix, \eqn{\boldsymbol V_i} is the covariance matrix equal to \eqn{\boldsymbol U_i^{1/2} \boldsymbol C(\boldsymbol \alpha)\boldsymbol U_i^{1/2}} with \eqn{\boldsymbol U_i} a diagonal matrix with elements \eqn{{\rm var}(y_{ij})} and \eqn{\boldsymbol C(\boldsymbol \alpha)} is the working correlation structure with non-diagonal terms \eqn{\boldsymbol \alpha}.
  Parameters \eqn{\boldsymbol \alpha} are estimated using simple moment estimators from the Pearson residuals.
  The matrix of weights \eqn{\boldsymbol W_i(\boldsymbol X_i, A_i, \boldsymbol \eta_W)=diag\left[R_{ij}/\pi_{ij}(\boldsymbol X_i, A_i, \boldsymbol \eta_W)\right]_{j=1,\dots,n_{i}}}, where \eqn{\pi_{ij}(\boldsymbol X_i, A_i, \boldsymbol \eta_W)=P(R_{ij}|\boldsymbol X_i, A_i)} is the Propensity score (PS).
  The function \eqn{\boldsymbol B(\boldsymbol X_i,A_i=a,\boldsymbol \eta_B)}, which is called the Outcome Model (OM), is a function linking \eqn{Y_{ij}} with \eqn{\boldsymbol X_i} and \eqn{A_i}.
@@ -117,7 +117,7 @@ The estimator is founds by solving:
  The estimator is most efficient if the OM is equal to \eqn{E(\boldsymbol Y_i|\boldsymbol X_i,A_i=a)}
  The estimator denoted \eqn{\hat{\beta}_{aug}} is found by solving the estimating equation.
  Although  analytic solutions sometimes exist, coefficient estimates are generally obtained using an iterative procedure such as the Newton-Raphson method.
- Automatic implementation is such that, \eqn{\hat{ \boldsymbol \eta}_W$ in $\boldsymbol W_i(\boldsymbol X_i, A_i, \hat{ \boldsymbol \eta}_W)} are obtained using a logistic regression and \eqn{\hat{ \boldsymbol \eta}_B$ in $\boldsymbol B(\boldsymbol X_i,A_i,\hat{ \boldsymbol \eta}_B)} are obtained using a linear regression.
+ Automatic implementation is such that, \eqn{\hat{ \boldsymbol \eta}_W} in \eqn{\boldsymbol W_i(\boldsymbol X_i, A_i, \hat{ \boldsymbol \eta}_W)} are obtained using a logistic regression and \eqn{\hat{ \boldsymbol \eta}_B} in \eqn{\boldsymbol B(\boldsymbol X_i,A_i,\hat{ \boldsymbol \eta}_B)} are obtained using a linear regression.
 
 
  The variance of \eqn{\hat{\boldsymbol \beta}_{aug}} is estimated by the sandwich variance estimator.
